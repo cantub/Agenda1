@@ -1,0 +1,142 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+//TAD - Tipo Abstrato de Dados
+typedef struct 
+{
+	char nome[40];
+	char email[40];
+	char telefone[12];
+}Agenda;
+
+	int menu()
+	{
+	int op;
+		do{
+		printf("\tMenu\n");
+		printf("1. Adicionar funcionário.\n");
+		printf("2. Consultar funcionário.\n");
+		printf("3. Excluír funcionário.\n");
+		printf("4. Pesquisa.\n");
+		printf("5. Mostrar.\n");
+		printf("6. Sair.\n");
+		printf("Opção: ");
+		scanf("%i",&op);
+		if((op < 1)|| (op > 6 )){
+		printf("Opção inválida...\n"); 
+		system ("pause"); 
+		}system ("cls");
+		return op;
+		}while(op!=6);
+	}
+
+	int main(int argc, char *argv[]) {
+	setlocale(LC_ALL, "Portuguese");
+	int i = 1, c;
+	int a = 0;
+	int j, x;
+	char nomes[40];
+	Agenda *p = (Agenda*) calloc(i, sizeof(Agenda));
+
+	int m;
+	
+	do
+	{
+	m = menu();
+	switch(m)
+		{
+	
+			case 1:
+				printf("\t Adicionar funcioário\n");
+				printf("Nome do funcionário : \n",i);
+				scanf(" %[^\n]s", p[i-1].nome);
+				printf("Telefone do funcionário: \n");
+				scanf("%s",&p[i-1].telefone);
+				printf("Email do funcionário: \n");
+				scanf("%s",&p[i-1].email);
+				printf("Seu número de registro é : %i\n",i);
+				i++;
+				p = (Agenda*) realloc(p, i * sizeof(Agenda));
+			system("pause");
+			system("cls");
+			break;
+			
+			case 2:
+			printf("Digite o numero de registro: ");
+			scanf("%i",&c);
+				if(c <= i)
+				{
+					printf("Nome: %s\n", p[c-1].nome);
+					printf("Telefone: %s\n", p[c-1].telefone);
+					printf("Email: %s\n", p[c-1].email);
+				}
+			
+			system("pause");
+			system("cls");
+			break;
+			
+			case 3:
+				printf("Numero de Registro: ");
+				scanf("%i", &i);
+				if(i <= i)
+				{
+					printf("Nome - %s\n", p[i-1].nome);
+					printf("E-mail - %s\n", p[i-1].email);
+					printf("Tel - %s\n", p [i-1].telefone);
+					printf("Seu cadastro foi excluido com sucesso.\n");
+					
+					for(j = 0; j <= i; j++)
+					{
+						if((i - 1) != j)
+						{
+							strcpy(p[a].nome,p[j].nome);
+							strcpy(p[a].email,p[j].email);
+							strcpy(p[a].telefone,p[j].telefone);
+							a++; 
+						}
+					}
+					
+					p = (Agenda*) realloc(p, a * sizeof(Agenda));
+					i--;	
+				}else
+					printf("Esse registro nao existe.\n"); 
+			system("pause");
+			system("cls");
+			break;
+			
+			case 4:
+				printf("\tPesquisa\n");
+				printf("Digite o nome:");
+				scanf(" %[^\n]s",nomes);
+				for(j = 0; j <= i; j++){
+					a = stricmp(nomes,p[j].nome);
+					if(a == 0){
+						printf("Numero de Registro: %i\n", (j+1));
+						printf("Nome: %s\n",p[j].nome);
+						printf("Email: %s\n",p[j].email);
+						printf("Telefone: %s\n",p[j].telefone);
+					}
+				}
+			system("pause");
+			system("cls");	
+			break;
+			
+			//Mostrar
+			case 5:
+				printf("\tTodos as pessoas.\n");
+				for(j = 0; j < (i - 1); j++)
+				{
+					printf("Numero de registro: %i\n", (j + 1));
+					printf("Nome: %s\n",p[j].nome);
+					printf("Email: %s\n",p[j].email);
+					printf("Telefone: %s\n",p[j].telefone);
+					printf("\n");
+				}
+			break;
+		} 
+	}while(m != 6);
+	p= NULL; 
+	return 0;
+}
